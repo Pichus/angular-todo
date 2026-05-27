@@ -1,15 +1,37 @@
 <div class="list-container">
   <div class="list-toolbar">
     <app-task-filters />
-    <button mat-flat-button (click)="openCreate()">
-      <mat-icon>add</mat-icon>
-      New Task
-    </button>
+    <div class="actions">
+      @if (selectedIds().size > 0) {
+        <button mat-stroked-button (click)="deleteSelected()">
+          <mat-icon>delete</mat-icon>
+          Delete ({{ selectedIds().size }})
+        </button>
+      }
+      <button mat-flat-button (click)="openCreate()">
+        <mat-icon>add</mat-icon>
+        New Task
+      </button>
+    </div>
   </div>
+
+  @if (tasks().length > 0) {
+    <div class="select-all-row">
+      <mat-checkbox [checked]="allSelected()" (change)="toggleSelectAll()">
+        Select all
+      </mat-checkbox>
+    </div>
+  }
 
   <div class="tasks">
     @for (task of tasks(); track task.id) {
-      <app-task-item [task]="task" (edit)="openEdit($event)" (delete)="delete($event)" />
+      <app-task-item
+        [task]="task"
+        [isSelected]="selectedIds().has(task.id)"
+        (selectedChange)="onSelectionChange(task.id, $event)"
+        (edit)="openEdit($event)"
+        (delete)="confirmDelete($event)"
+      />
     } @empty {
       <p class="empty">No tasks found.</p>
     }

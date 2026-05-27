@@ -1,19 +1,21 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
 import { Task } from '../../store/task.model';
 import { TasksActions } from '../../store/tasks.actions';
 import { selectFilteredTasks } from '../../store/tasks.selectors';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog';
 import { TaskFiltersComponent } from '../task-filters/task-filters';
 import { TaskFormDialogComponent } from '../task-form-dialog/task-form-dialog';
 import { TaskItemComponent } from '../task-item/task-item';
 
 @Component({
   selector: 'app-task-list',
-  imports: [MatButtonModule, MatIconModule, TaskItemComponent, TaskFiltersComponent],
+  imports: [MatButtonModule, MatCheckboxModule, MatIconModule, TaskItemComponent, TaskFiltersComponent],
   templateUrl: './task-list.html',
   styleUrl: './task-list.scss',
 })
@@ -22,6 +24,12 @@ export class TaskListComponent {
   private dialog = inject(MatDialog);
 
   tasks = toSignal(this.store.select(selectFilteredTasks), { initialValue: [] });
+  selectedIds = signal<Set<string>>(new Set());
+
+  allSelected = computed(() => {
+    const tasks = this.tasks();
+    return tasks.length > 0 && tasks.every((t) => this.selectedIds().has(t.id));
+  });
 
   openCreate(): void {
     this.dialog.open(TaskFormDialogComponent);
@@ -31,7 +39,42 @@ export class TaskListComponent {
     this.dialog.open(TaskFormDialogComponent, { data: task });
   }
 
-  delete(id: string): void {
-    this.store.dispatch(TasksActions.deleteTask({ id }));
+  confirmDelete(id: string): void {
+    this.dialog
+      .open(ConfirmDialogComponent, { data: { message: 'Delete this task?' } })
+      .afterClosed()
+      .subscribe((confirmed) => {
+        if (confirmed) this.store.dispatch(TasksActions.deleteTask({ id }));
+      });
+  }
+
+  deleteSelected(): void {
+    const ids = [...this.selectedIds()];
+    this.dialog
+      .open(ConfirmDialogComponent, {
+        data: { message: `Delete ${ids.length} task${ids.length > 1 ? 's' : ''}?` },
+      })
+      .afterClosed()
+      .subscribe((confirmed) => {
+        if (confirmed) {
+          this.store.dispatch(TasksActions.deleteManyTasks({ ids }));
+          this.selectedIds.set(new Set());
+        }
+      });
+  }
+
+  toggleSelectAll(): void {
+    if (this.allSelected()) {
+      this.selectedIds.set(new Set());
+    } else {
+      this.selectedIds.set(new Set(this.tasks().map((t) => t.id)));
+    }
+  }
+
+  onSelectionChange(taskId: string, checked: boolean): void {
+    const set = new Set(this.selectedIds());
+    if (checked) set.add(taskId);
+    else set.delete(taskId);
+    this.selectedIds.set(set);
   }
 }

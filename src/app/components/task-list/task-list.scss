@@ -1,7 +1,7 @@
 .list-container {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
   padding-top: 16px;
 
   .list-toolbar {
@@ -10,6 +10,17 @@
     justify-content: space-between;
     gap: 16px;
     flex-wrap: wrap;
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+  }
+
+  .select-all-row {
+    padding: 4px 0;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
   }
 
   .tasks {
