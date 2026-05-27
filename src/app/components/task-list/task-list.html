@@ -31,6 +31,7 @@
         (selectedChange)="onSelectionChange(task.id, $event)"
         (edit)="openEdit($event)"
         (delete)="confirmDelete($event)"
+        (view)="openDetail($event)"
       />
     } @empty {
       <p class="empty">No tasks found.</p>

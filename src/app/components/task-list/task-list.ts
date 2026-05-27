@@ -9,6 +9,7 @@ import { Task } from '../../store/task.model';
 import { TasksActions } from '../../store/tasks.actions';
 import { selectFilteredTasks } from '../../store/tasks.selectors';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog';
+import { TaskDetailDialogComponent } from '../task-detail-dialog/task-detail-dialog';
 import { TaskFiltersComponent } from '../task-filters/task-filters';
 import { TaskFormDialogComponent } from '../task-form-dialog/task-form-dialog';
 import { TaskItemComponent } from '../task-item/task-item';
@@ -61,6 +62,10 @@ export class TaskListComponent {
           this.selectedIds.set(new Set());
         }
       });
+  }
+
+  openDetail(task: Task): void {
+    this.dialog.open(TaskDetailDialogComponent, { data: task.id, width: '500px' });
   }
 
   toggleSelectAll(): void {
