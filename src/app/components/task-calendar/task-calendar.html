@@ -1,0 +1,17 @@
+<div class="calendar-container">
+  <mat-calendar
+    [dateClass]="dateClass()"
+    (selectedChange)="selectedDate.set($event)"
+  />
+
+  @if (selectedDate()) {
+    <div class="date-tasks">
+      <h3>{{ selectedDate() | date: 'longDate' }}</h3>
+      @for (task of tasksForDate(); track task.id) {
+        <app-task-item [task]="task" (edit)="openEdit($event)" (delete)="delete($event)" />
+      } @empty {
+        <p class="empty">No tasks for this date.</p>
+      }
+    </div>
+  }
+</div>
