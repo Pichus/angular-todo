@@ -1,0 +1,24 @@
+<div class="task-item">
+  <mat-select
+    [value]="task().status"
+    (selectionChange)="onStatusChange($event.value)"
+    class="status-select"
+  >
+    @for (s of statuses; track s) {
+      <mat-option [value]="s">{{ s }}</mat-option>
+    }
+  </mat-select>
+
+  <span class="title">{{ task().title }}</span>
+
+  @if (task().dueDate) {
+    <span class="due-date">{{ task().dueDate | date: 'mediumDate' }}</span>
+  }
+
+  <button mat-icon-button (click)="edit.emit(task())">
+    <mat-icon>edit</mat-icon>
+  </button>
+  <button mat-icon-button (click)="delete.emit(task().id)">
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>
