@@ -17,3 +17,6 @@ export const selectFilteredTasks = createSelector(
       return matchesSearch && matchesStatus;
     }),
 );
+
+export const selectTaskById = (id: string) =>
+  createSelector(selectAllTasks, (tasks) => tasks.find((t) => t.id === id) ?? null);

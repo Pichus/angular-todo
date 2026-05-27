@@ -3,9 +3,9 @@ import { Task } from './task.model';
 import { selectFilteredTasks } from './tasks.selectors';
 
 const tasks: Task[] = [
-  { id: '1', title: 'Buy milk', status: 'todo', dueDate: null },
-  { id: '2', title: 'Write code', status: 'in-progress', dueDate: null },
-  { id: '3', title: 'Deploy app', status: 'done', dueDate: null },
+  { id: '1', title: 'Buy milk', description: null, status: 'todo', dueDate: null },
+  { id: '2', title: 'Write code', description: 'Implement feature X', status: 'in-progress', dueDate: null },
+  { id: '3', title: 'Deploy app', description: null, status: 'done', dueDate: null },
 ];
 
 const select = (search: string, status: 'all' | Task['status']) =>

@@ -37,6 +37,10 @@ export const tasksFeature = createFeature({
       ...state,
       tasks: state.tasks.filter((t) => t.id !== id),
     })),
+    on(TasksActions.deleteManyTasks, (state, { ids }) => ({
+      ...state,
+      tasks: state.tasks.filter((t) => !ids.includes(t.id)),
+    })),
     on(TasksActions.setFilter, (state, { filter }) => ({
       ...state,
       filter: { ...state.filter, ...filter },

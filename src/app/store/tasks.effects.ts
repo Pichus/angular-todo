@@ -17,6 +17,7 @@ export class TasksEffects {
           TasksActions.addTask,
           TasksActions.updateTask,
           TasksActions.deleteTask,
+          TasksActions.deleteManyTasks,
         ),
         withLatestFrom(this.store.select(selectAllTasks)),
         tap(([, tasks]) => localStorage.setItem('tasks', JSON.stringify(tasks))),

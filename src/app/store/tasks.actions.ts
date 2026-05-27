@@ -7,6 +7,7 @@ export const TasksActions = createActionGroup({
     'Add Task': props<{ task: Omit<Task, 'id'> }>(),
     'Update Task': props<{ task: Task }>(),
     'Delete Task': props<{ id: string }>(),
+    'Delete Many Tasks': props<{ ids: string[] }>(),
     'Set Filter': props<{ filter: Partial<FilterState> }>(),
   },
 });

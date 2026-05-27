@@ -10,13 +10,13 @@ const baseState: TasksState = {
   filter: { search: '', status: 'all' },
 };
 
-const mockTask: Task = { id: '1', title: 'Test task', status: 'todo', dueDate: null };
+const mockTask: Task = { id: '1', title: 'Test task', description: null, status: 'todo', dueDate: null };
 
 describe('tasks reducer', () => {
   it('adds a task with generated id', () => {
     const state = reducer(
       baseState,
-      TasksActions.addTask({ task: { title: 'New', status: 'todo', dueDate: null } }),
+      TasksActions.addTask({ task: { title: 'New', description: null, status: 'todo', dueDate: null } }),
     );
     expect(state.tasks).toHaveLength(1);
     expect(state.tasks[0].title).toBe('New');
@@ -32,7 +32,7 @@ describe('tasks reducer', () => {
   });
 
   it('does not mutate other tasks on update', () => {
-    const other: Task = { id: '2', title: 'Other', status: 'done', dueDate: null };
+    const other: Task = { id: '2', title: 'Other', description: null, status: 'done', dueDate: null };
     const state = reducer(
       { ...baseState, tasks: [mockTask, other] },
       TasksActions.updateTask({ task: { ...mockTask, title: 'Updated' } }),
@@ -44,6 +44,15 @@ describe('tasks reducer', () => {
     const state = reducer(
       { ...baseState, tasks: [mockTask] },
       TasksActions.deleteTask({ id: '1' }),
+    );
+    expect(state.tasks).toHaveLength(0);
+  });
+
+  it('deletes many tasks by ids', () => {
+    const other: Task = { id: '2', title: 'Other', description: null, status: 'done', dueDate: null };
+    const state = reducer(
+      { ...baseState, tasks: [mockTask, other] },
+      TasksActions.deleteManyTasks({ ids: ['1', '2'] }),
     );
     expect(state.tasks).toHaveLength(0);
   });
