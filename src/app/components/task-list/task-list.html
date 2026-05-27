@@ -1,0 +1,17 @@
+<div class="list-container">
+  <div class="list-toolbar">
+    <app-task-filters />
+    <button mat-flat-button (click)="openCreate()">
+      <mat-icon>add</mat-icon>
+      New Task
+    </button>
+  </div>
+
+  <div class="tasks">
+    @for (task of tasks(); track task.id) {
+      <app-task-item [task]="task" (edit)="openEdit($event)" (delete)="delete($event)" />
+    } @empty {
+      <p class="empty">No tasks found.</p>
+    }
+  </div>
+</div>

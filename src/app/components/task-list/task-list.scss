@@ -1,0 +1,24 @@
+.list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 16px;
+
+  .list-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .tasks {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .empty {
+    color: var(--mat-sys-on-surface-variant);
+    padding: 16px 0;
+  }
+}
