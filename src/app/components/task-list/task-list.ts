@@ -65,7 +65,7 @@ export class TaskListComponent {
   }
 
   openDetail(task: Task): void {
-    this.dialog.open(TaskDetailDialogComponent, { data: task.id, width: '500px' });
+    this.dialog.open(TaskDetailDialogComponent, { data: task.id, width: '500px', maxWidth: '95vw' });
   }
 
   toggleSelectAll(): void {

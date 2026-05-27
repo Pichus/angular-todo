@@ -1,9 +1,15 @@
+h2[mat-dialog-title] {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
 .detail-body {
-  min-width: 360px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 12px;
   padding-top: 8px;
+  overflow-x: hidden;
 
   .meta-row {
     display: flex;
@@ -20,6 +26,8 @@
 
   .value {
     font: var(--mat-sys-body-medium);
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .description-section {
@@ -31,6 +39,7 @@
       margin: 0;
       white-space: pre-wrap;
       word-break: break-word;
+      overflow-wrap: break-word;
       font: var(--mat-sys-body-medium);
       line-height: 1.5;
     }
