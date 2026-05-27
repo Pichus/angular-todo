@@ -45,12 +45,9 @@ export class TaskFormDialogComponent {
   form = this.fb.group({
     title: [
       this.data?.title ?? '',
-      [Validators.required, Validators.minLength(2), Validators.maxLength(100)],
+      [Validators.required, Validators.minLength(2)],
     ],
-    description: [
-      this.data?.description ?? '',
-      [Validators.maxLength(500)],
-    ],
+    description: [this.data?.description ?? ''],
     status: [this.data?.status ?? 'todo'],
     dueDate: [
       this.data?.dueDate ? new Date(this.data.dueDate) : (null as Date | null),

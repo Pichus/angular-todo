@@ -5,21 +5,22 @@
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Title *</mat-label>
       <input matInput formControlName="title" maxlength="100" />
+      <mat-hint align="end" [class.limit-reached]="(form.get('title')?.value?.length || 0) >= 100">
+        {{ form.get('title')?.value?.length || 0 }}/100
+      </mat-hint>
       @if (form.get('title')?.hasError('required')) {
         <mat-error>Title is required</mat-error>
       } @else if (form.get('title')?.hasError('minlength')) {
         <mat-error>Min 2 characters</mat-error>
-      } @else if (form.get('title')?.hasError('maxlength')) {
-        <mat-error>Max 100 characters</mat-error>
       }
     </mat-form-field>
 
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Description</mat-label>
       <textarea matInput formControlName="description" rows="3" maxlength="500"></textarea>
-      @if (form.get('description')?.hasError('maxlength')) {
-        <mat-error>Max 500 characters</mat-error>
-      }
+      <mat-hint align="end" [class.limit-reached]="(form.get('description')?.value?.length || 0) >= 500">
+        {{ form.get('description')?.value?.length || 0 }}/500
+      </mat-hint>
     </mat-form-field>
 
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
