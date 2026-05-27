@@ -1,15 +1,20 @@
 <div class="task-item">
-  <mat-select
-    [value]="task().status"
-    (selectionChange)="onStatusChange($event.value)"
-    class="status-select"
-  >
-    @for (s of statuses; track s) {
-      <mat-option [value]="s">{{ s }}</mat-option>
-    }
-  </mat-select>
+  <mat-checkbox [checked]="isSelected()" (change)="selectedChange.emit($event.checked)" (click)="$event.stopPropagation()" />
 
-  <span class="title">{{ task().title }}</span>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic" class="status-field">
+    <mat-select [value]="task().status" (selectionChange)="onStatusChange($event.value)">
+      @for (s of statuses; track s) {
+        <mat-option [value]="s">{{ s }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <div class="task-content" (click)="view.emit(task())">
+    <span class="title">{{ task().title }}</span>
+    @if (task().description) {
+      <span class="description">{{ task().description }}</span>
+    }
+  </div>
 
   @if (task().dueDate) {
     <span class="due-date">{{ task().dueDate | date: 'mediumDate' }}</span>
