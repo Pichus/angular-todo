@@ -2,9 +2,9 @@
 
 <mat-dialog-content>
   <form class="form-fields" [formGroup]="form">
-    <mat-form-field appearance="outline">
-      <mat-label>Title</mat-label>
-      <input matInput formControlName="title" />
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Title *</mat-label>
+      <input matInput formControlName="title" maxlength="100" />
       @if (form.get('title')?.hasError('required')) {
         <mat-error>Title is required</mat-error>
       } @else if (form.get('title')?.hasError('minlength')) {
@@ -14,15 +14,15 @@
       }
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Description</mat-label>
-      <textarea matInput formControlName="description" rows="3"></textarea>
+      <textarea matInput formControlName="description" rows="3" maxlength="500"></textarea>
       @if (form.get('description')?.hasError('maxlength')) {
         <mat-error>Max 500 characters</mat-error>
       }
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Status</mat-label>
       <mat-select formControlName="status">
         @for (s of statuses; track s) {
@@ -31,7 +31,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Due Date</mat-label>
       <input matInput [matDatepicker]="picker" [min]="today" formControlName="dueDate" />
       <mat-datepicker-toggle matIconSuffix [for]="picker" />
