@@ -1,23 +1,24 @@
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { TestBed } from '@angular/core/testing';
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
 import { App } from './app';
+import { tasksFeature } from './store/tasks.reducer';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
+      providers: [
+        provideNativeDateAdapter(),
+        provideStore({ [tasksFeature.name]: tasksFeature.reducer }),
+        provideEffects([]),
+      ],
     }).compileComponents();
   });
 
-  it('should create the app', () => {
+  it('should create', () => {
     const fixture = TestBed.createComponent(App);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it('should render title', async () => {
-    const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, todo');
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });
