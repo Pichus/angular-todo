@@ -16,7 +16,13 @@ import { TaskItemComponent } from '../task-item/task-item';
 
 @Component({
   selector: 'app-task-list',
-  imports: [MatButtonModule, MatCheckboxModule, MatIconModule, TaskItemComponent, TaskFiltersComponent],
+  imports: [
+    MatButtonModule,
+    MatCheckboxModule,
+    MatIconModule,
+    TaskItemComponent,
+    TaskFiltersComponent,
+  ],
   templateUrl: './task-list.html',
   styleUrl: './task-list.scss',
 })
@@ -65,7 +71,11 @@ export class TaskListComponent {
   }
 
   public openDetail(task: Task): void {
-    this.dialog.open(TaskDetailDialogComponent, { data: task.id, width: '500px', maxWidth: '95vw' });
+    this.dialog.open(TaskDetailDialogComponent, {
+      data: task.id,
+      width: '500px',
+      maxWidth: '95vw',
+    });
   }
 
   public toggleSelectAll(): void {
@@ -78,8 +88,11 @@ export class TaskListComponent {
 
   public onSelectionChange(taskId: string, checked: boolean): void {
     const set = new Set(this.selectedIds());
-    if (checked) set.add(taskId);
-    else set.delete(taskId);
+    if (checked) {
+      set.add(taskId);
+    } else {
+      set.delete(taskId);
+    }
     this.selectedIds.set(set);
   }
 }
