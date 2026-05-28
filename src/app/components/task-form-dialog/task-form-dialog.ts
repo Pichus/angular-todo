@@ -1,5 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -11,7 +17,9 @@ import { TASK_STATUSES, Task } from '../../store/task.model';
 import { TasksActions } from '../../store/tasks.actions';
 
 function futureDateValidator(control: AbstractControl): ValidationErrors | null {
-  if (!control.value) return null;
+  if (!control.value) {
+    return null;
+  }
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const selected = new Date(control.value);
@@ -36,18 +44,30 @@ function futureDateValidator(control: AbstractControl): ValidationErrors | null 
 export class TaskFormDialogComponent {
   private readonly store = inject(Store);
   private readonly dialogRef = inject(MatDialogRef<TaskFormDialogComponent>);
-  private readonly fb = inject(FormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
 
   public readonly data: Task | null = inject(MAT_DIALOG_DATA, { optional: true });
   public statuses = TASK_STATUSES;
   public readonly today = new Date();
 
-  public form = this.fb.group({
+  public readonly TITLE_MIN_LENGTH = 2;
+  public readonly TITLE_MAX_LENGTH = 100;
+
+  public readonly DESCRIPTION_MAX_LENGTH = 500;
+
+  public form = this.formBuilder.group({
     title: [
       this.data?.title ?? '',
-      [Validators.required, Validators.minLength(2)],
+      [
+        Validators.required,
+        Validators.minLength(this.TITLE_MIN_LENGTH),
+        Validators.maxLength(this.TITLE_MAX_LENGTH),
+      ],
     ],
-    description: [this.data?.description ?? ''],
+    description: [
+      this.data?.description ?? '',
+      [Validators.maxLength(this.DESCRIPTION_MAX_LENGTH)],
+    ],
     status: [this.data?.status ?? 'todo'],
     dueDate: [
       this.data?.dueDate ? new Date(this.data.dueDate) : (null as Date | null),
@@ -56,7 +76,9 @@ export class TaskFormDialogComponent {
   });
 
   public submit(): void {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      return;
+    }
     const { title, description, status, dueDate } = this.form.getRawValue();
     const taskData = {
       title: title!,

@@ -5,29 +5,46 @@
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Title *</mat-label>
       <input matInput formControlName="title" maxlength="100" />
-      <mat-hint align="end" [class.limit-reached]="(form.get('title')?.value?.length || 0) >= 100">
-        {{ form.get('title')?.value?.length || 0 }}/100
+      <mat-hint
+        align="end"
+        [class.limit-reached]="(form.get('title')?.value?.length ?? 0) >= TITLE_MAX_LENGTH"
+      >
+        {{ (form.get('title')?.value?.length ?? 0).toString() + '/' + TITLE_MAX_LENGTH.toString() }}
       </mat-hint>
       @if (form.get('title')?.hasError('required')) {
         <mat-error>Title is required</mat-error>
       } @else if (form.get('title')?.hasError('minlength')) {
-        <mat-error>Min 2 characters</mat-error>
+        <mat-error>Min {{ TITLE_MIN_LENGTH }} characters</mat-error>
+      } @else if (form.get('title')?.hasError('maxlength')) {
+        <mat-error>Max {{ TITLE_MAX_LENGTH }} characters</mat-error>
       }
     </mat-form-field>
 
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Description</mat-label>
       <textarea matInput formControlName="description" rows="3" maxlength="500"></textarea>
-      <mat-hint align="end" [class.limit-reached]="(form.get('description')?.value?.length || 0) >= 500">
-        {{ form.get('description')?.value?.length || 0 }}/500
+      <mat-hint
+        align="end"
+        [class.limit-reached]="
+          (form.get('description')?.value?.length ?? 0) >= DESCRIPTION_MAX_LENGTH
+        "
+      >
+        {{
+          (form.get('description')?.value?.length ?? 0).toString() +
+            '/' +
+            DESCRIPTION_MAX_LENGTH.toString()
+        }}
       </mat-hint>
+      @if (form.get('description')?.hasError('maxlength')) {
+        <mat-error>Max {{ DESCRIPTION_MAX_LENGTH }} characters</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Status</mat-label>
       <mat-select formControlName="status">
-        @for (s of statuses; track s) {
-          <mat-option [value]="s">{{ s }}</mat-option>
+        @for (status of statuses; track status) {
+          <mat-option [value]="status">{{ status }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
@@ -37,7 +54,10 @@
       <input matInput [matDatepicker]="picker" [min]="today" formControlName="dueDate" />
       <mat-datepicker-toggle matIconSuffix [for]="picker" />
       <mat-datepicker #picker />
-      @if (form.get('dueDate')?.hasError('pastDate') || form.get('dueDate')?.hasError('matDatepickerMin')) {
+      @if (
+        form.get('dueDate')?.hasError('pastDate') ||
+        form.get('dueDate')?.hasError('matDatepickerMin')
+      ) {
         <mat-error>Due date must be today or in the future</mat-error>
       }
     </mat-form-field>
