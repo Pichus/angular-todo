@@ -11,7 +11,14 @@ import { TasksActions } from '../../store/tasks.actions';
 
 @Component({
   selector: 'app-task-item',
-  imports: [MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, MatSelectModule, DatePipe],
+  imports: [
+    MatButtonModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatSelectModule,
+    DatePipe,
+  ],
   templateUrl: './task-item.html',
   styleUrl: './task-item.scss',
 })
