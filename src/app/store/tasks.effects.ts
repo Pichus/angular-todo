@@ -10,7 +10,7 @@ export class TasksEffects {
   private actions$ = inject(Actions);
   private store = inject(Store);
 
-  persistTasks$ = createEffect(
+  public persistTasks$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(

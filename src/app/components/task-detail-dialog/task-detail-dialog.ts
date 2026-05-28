@@ -20,9 +20,9 @@ export class TaskDetailDialogComponent {
   private dialogRef = inject(MatDialogRef<TaskDetailDialogComponent>);
   private taskId: string = inject(MAT_DIALOG_DATA);
 
-  task = toSignal(this.store.select(selectTaskById(this.taskId)));
+  public task = toSignal(this.store.select(selectTaskById(this.taskId)));
 
-  openEdit(): void {
+  public openEdit(): void {
     const task = this.task();
     if (!task) return;
     this.dialogRef.close();

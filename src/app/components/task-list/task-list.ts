@@ -24,23 +24,23 @@ export class TaskListComponent {
   private store = inject(Store);
   private dialog = inject(MatDialog);
 
-  tasks = toSignal(this.store.select(selectFilteredTasks), { initialValue: [] });
-  selectedIds = signal<Set<string>>(new Set());
+  public tasks = toSignal(this.store.select(selectFilteredTasks), { initialValue: [] });
+  public selectedIds = signal<Set<string>>(new Set());
 
-  allSelected = computed(() => {
+  public allSelected = computed(() => {
     const tasks = this.tasks();
     return tasks.length > 0 && tasks.every((t) => this.selectedIds().has(t.id));
   });
 
-  openCreate(): void {
+  public openCreate(): void {
     this.dialog.open(TaskFormDialogComponent);
   }
 
-  openEdit(task: Task): void {
+  public openEdit(task: Task): void {
     this.dialog.open(TaskFormDialogComponent, { data: task });
   }
 
-  confirmDelete(id: string): void {
+  public confirmDelete(id: string): void {
     this.dialog
       .open(ConfirmDialogComponent, { data: { message: 'Delete this task?' } })
       .afterClosed()
@@ -49,7 +49,7 @@ export class TaskListComponent {
       });
   }
 
-  deleteSelected(): void {
+  public deleteSelected(): void {
     const ids = [...this.selectedIds()];
     this.dialog
       .open(ConfirmDialogComponent, {
@@ -64,11 +64,11 @@ export class TaskListComponent {
       });
   }
 
-  openDetail(task: Task): void {
+  public openDetail(task: Task): void {
     this.dialog.open(TaskDetailDialogComponent, { data: task.id, width: '500px', maxWidth: '95vw' });
   }
 
-  toggleSelectAll(): void {
+  public toggleSelectAll(): void {
     if (this.allSelected()) {
       this.selectedIds.set(new Set());
     } else {
@@ -76,7 +76,7 @@ export class TaskListComponent {
     }
   }
 
-  onSelectionChange(taskId: string, checked: boolean): void {
+  public onSelectionChange(taskId: string, checked: boolean): void {
     const set = new Set(this.selectedIds());
     if (checked) set.add(taskId);
     else set.delete(taskId);

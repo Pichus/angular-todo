@@ -18,16 +18,16 @@ import { TasksActions } from '../../store/tasks.actions';
 export class TaskItemComponent {
   private store = inject(Store);
 
-  task = input.required<Task>();
-  isSelected = input<boolean>(false);
-  edit = output<Task>();
-  delete = output<string>();
-  view = output<Task>();
-  selectedChange = output<boolean>();
+  public task = input.required<Task>();
+  public isSelected = input<boolean>(false);
+  public edit = output<Task>();
+  public delete = output<string>();
+  public view = output<Task>();
+  public selectedChange = output<boolean>();
 
-  statuses: TaskStatus[] = TASK_STATUSES;
+  public statuses: TaskStatus[] = TASK_STATUSES;
 
-  onStatusChange(status: TaskStatus): void {
+  public onStatusChange(status: TaskStatus): void {
     this.store.dispatch(TasksActions.updateTask({ task: { ...this.task(), status } }));
   }
 }

@@ -18,15 +18,15 @@ import { selectFilter } from '../../store/tasks.selectors';
 export class TaskFiltersComponent {
   private store = inject(Store);
 
-  filter = toSignal(this.store.select(selectFilter));
-  statuses: (TaskStatus | 'all')[] = ['all', ...TASK_STATUSES];
+  public filter = toSignal(this.store.select(selectFilter));
+  public statuses: (TaskStatus | 'all')[] = ['all', ...TASK_STATUSES];
 
-  onSearchChange(event: Event): void {
+  public onSearchChange(event: Event): void {
     const search = (event.target as HTMLInputElement).value;
     this.store.dispatch(TasksActions.setFilter({ filter: { search } }));
   }
 
-  onStatusChange(status: TaskStatus | 'all'): void {
+  public onStatusChange(status: TaskStatus | 'all'): void {
     this.store.dispatch(TasksActions.setFilter({ filter: { status } }));
   }
 }

@@ -8,6 +8,6 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
   templateUrl: './confirm-dialog.html',
 })
 export class ConfirmDialogComponent {
-  data: { message: string } = inject(MAT_DIALOG_DATA);
-  dialogRef = inject(MatDialogRef<ConfirmDialogComponent>);
+  public data: { message: string } = inject(MAT_DIALOG_DATA);
+  public dialogRef = inject(MatDialogRef<ConfirmDialogComponent>);
 }

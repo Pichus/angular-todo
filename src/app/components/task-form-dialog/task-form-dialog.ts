@@ -38,11 +38,11 @@ export class TaskFormDialogComponent {
   private dialogRef = inject(MatDialogRef<TaskFormDialogComponent>);
   private fb = inject(FormBuilder);
 
-  data: Task | null = inject(MAT_DIALOG_DATA, { optional: true });
-  statuses = TASK_STATUSES;
-  readonly today = new Date();
+  public data: Task | null = inject(MAT_DIALOG_DATA, { optional: true });
+  public statuses = TASK_STATUSES;
+  public readonly today = new Date();
 
-  form = this.fb.group({
+  public form = this.fb.group({
     title: [
       this.data?.title ?? '',
       [Validators.required, Validators.minLength(2)],
@@ -55,7 +55,7 @@ export class TaskFormDialogComponent {
     ],
   });
 
-  submit(): void {
+  public submit(): void {
     if (this.form.invalid) return;
     const { title, description, status, dueDate } = this.form.getRawValue();
     const taskData = {
