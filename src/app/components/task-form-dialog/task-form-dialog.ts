@@ -75,6 +75,45 @@ export class TaskFormDialogComponent {
     ],
   });
 
+  public get dialogTitle(): string {
+    return this.data ? 'Edit Task' : 'New Task';
+  }
+
+  public get titleControl() {
+    return this.form.controls.title;
+  }
+
+  public get descriptionControl() {
+    return this.form.controls.description;
+  }
+
+  public get dueDateControl() {
+    return this.form.controls.dueDate;
+  }
+
+  public get titleLength(): number {
+    return this.titleControl.value?.length ?? 0;
+  }
+
+  public get titleAtLimit(): boolean {
+    return this.titleLength >= this.TITLE_MAX_LENGTH;
+  }
+
+  public get descriptionLength(): number {
+    return this.descriptionControl.value?.length ?? 0;
+  }
+
+  public get descriptionAtLimit(): boolean {
+    return this.descriptionLength >= this.DESCRIPTION_MAX_LENGTH;
+  }
+
+  public get dueDateHasError(): boolean {
+    return (
+      this.dueDateControl.hasError('pastDate') ||
+      this.dueDateControl.hasError('matDatepickerMin')
+    );
+  }
+
   public submit(): void {
     if (this.form.invalid) {
       return;

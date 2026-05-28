@@ -10,4 +10,8 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 export class ConfirmDialogComponent {
   public readonly data: { message: string } = inject(MAT_DIALOG_DATA);
   public readonly dialogRef = inject(MatDialogRef<ConfirmDialogComponent>);
+
+  public confirm(): void {
+    this.dialogRef.close(true);
+  }
 }

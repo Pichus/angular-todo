@@ -1,8 +1,8 @@
 <div class="task-item">
   <mat-checkbox
     [checked]="isSelected()"
-    (change)="selectedChange.emit($event.checked)"
-    (click)="$event.stopPropagation()"
+    (change)="onCheckboxChange($event.checked)"
+    (click)="onCheckboxClick($event)"
   />
 
   <mat-form-field appearance="outline" subscriptSizing="dynamic" class="status-field">
@@ -13,7 +13,7 @@
     </mat-select>
   </mat-form-field>
 
-  <div class="task-content" (click)="view.emit(task())">
+  <div class="task-content" (click)="onView()">
     <span class="title">{{ task().title }}</span>
     @if (task().description; as description) {
       <span class="description">{{ description }}</span>
@@ -24,10 +24,10 @@
     <span class="due-date">{{ dueDate | date: 'mediumDate' }}</span>
   }
 
-  <button mat-icon-button (click)="edit.emit(task())">
+  <button mat-icon-button (click)="onEdit()">
     <mat-icon>edit</mat-icon>
   </button>
-  <button mat-icon-button (click)="delete.emit(task().id)">
+  <button mat-icon-button (click)="onDelete()">
     <mat-icon>delete</mat-icon>
   </button>
 </div>

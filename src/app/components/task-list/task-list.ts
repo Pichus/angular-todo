@@ -38,6 +38,13 @@ export class TaskListComponent {
     return tasks.length > 0 && tasks.every((t) => this.selectedIds().has(t.id));
   });
 
+  public hasSelection = computed(() => this.selectedIds().size > 0);
+  public selectionCount = computed(() => this.selectedIds().size);
+
+  public isTaskSelected(id: string): boolean {
+    return this.selectedIds().has(id);
+  }
+
   public openCreate(): void {
     this.dialog.open(TaskFormDialogComponent);
   }

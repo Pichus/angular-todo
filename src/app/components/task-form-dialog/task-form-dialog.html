@@ -1,21 +1,18 @@
-<h2 mat-dialog-title>{{ data ? 'Edit Task' : 'New Task' }}</h2>
+<h2 mat-dialog-title>{{ dialogTitle }}</h2>
 
 <mat-dialog-content>
   <form class="form-fields" [formGroup]="form">
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Title *</mat-label>
       <input matInput formControlName="title" maxlength="100" />
-      <mat-hint
-        align="end"
-        [class.limit-reached]="(form.get('title')?.value?.length ?? 0) >= TITLE_MAX_LENGTH"
-      >
-        {{ (form.get('title')?.value?.length ?? 0).toString() + '/' + TITLE_MAX_LENGTH.toString() }}
+      <mat-hint align="end" [class.limit-reached]="titleAtLimit">
+        {{ titleLength }}/{{ TITLE_MAX_LENGTH }}
       </mat-hint>
-      @if (form.get('title')?.hasError('required')) {
+      @if (titleControl.hasError('required')) {
         <mat-error>Title is required</mat-error>
-      } @else if (form.get('title')?.hasError('minlength')) {
+      } @else if (titleControl.hasError('minlength')) {
         <mat-error>Min {{ TITLE_MIN_LENGTH }} characters</mat-error>
-      } @else if (form.get('title')?.hasError('maxlength')) {
+      } @else if (titleControl.hasError('maxlength')) {
         <mat-error>Max {{ TITLE_MAX_LENGTH }} characters</mat-error>
       }
     </mat-form-field>
@@ -23,19 +20,10 @@
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
       <mat-label>Description</mat-label>
       <textarea matInput formControlName="description" rows="3" maxlength="500"></textarea>
-      <mat-hint
-        align="end"
-        [class.limit-reached]="
-          (form.get('description')?.value?.length ?? 0) >= DESCRIPTION_MAX_LENGTH
-        "
-      >
-        {{
-          (form.get('description')?.value?.length ?? 0).toString() +
-            '/' +
-            DESCRIPTION_MAX_LENGTH.toString()
-        }}
+      <mat-hint align="end" [class.limit-reached]="descriptionAtLimit">
+        {{ descriptionLength }}/{{ DESCRIPTION_MAX_LENGTH }}
       </mat-hint>
-      @if (form.get('description')?.hasError('maxlength')) {
+      @if (descriptionControl.hasError('maxlength')) {
         <mat-error>Max {{ DESCRIPTION_MAX_LENGTH }} characters</mat-error>
       }
     </mat-form-field>
@@ -54,10 +42,7 @@
       <input matInput [matDatepicker]="picker" [min]="today" formControlName="dueDate" />
       <mat-datepicker-toggle matIconSuffix [for]="picker" />
       <mat-datepicker #picker />
-      @if (
-        form.get('dueDate')?.hasError('pastDate') ||
-        form.get('dueDate')?.hasError('matDatepickerMin')
-      ) {
+      @if (dueDateHasError) {
         <mat-error>Due date must be today or in the future</mat-error>
       }
     </mat-form-field>

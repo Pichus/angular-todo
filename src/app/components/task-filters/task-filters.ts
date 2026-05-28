@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,6 +20,9 @@ export class TaskFiltersComponent {
 
   public filter = toSignal(this.store.select(selectFilter));
   public statuses: (TaskStatus | 'all')[] = ['all', ...TASK_STATUSES];
+
+  public searchValue = computed(() => this.filter()?.search ?? '');
+  public statusValue = computed(() => this.filter()?.status ?? 'all');
 
   public onSearchChange(event: Event): void {
     const search = (event.target as HTMLInputElement).value;

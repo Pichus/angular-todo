@@ -1,16 +1,13 @@
 <div class="filters">
   <mat-form-field appearance="outline" subscriptSizing="dynamic">
     <mat-label>Search</mat-label>
-    <input matInput [value]="filter()?.search ?? ''" (input)="onSearchChange($event)" />
+    <input matInput [value]="searchValue()" (input)="onSearchChange($event)" />
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
 
-  <mat-button-toggle-group
-    [value]="filter()?.status ?? 'all'"
-    (change)="onStatusChange($event.value)"
-  >
-    @for (status of statuses; track status) {
-      <mat-button-toggle [value]="status">{{ status }}</mat-button-toggle>
+  <mat-button-toggle-group [value]="statusValue()" (change)="onStatusChange($event.value)">
+    @for (s of statuses; track s) {
+      <mat-button-toggle [value]="s">{{ s }}</mat-button-toggle>
     }
   </mat-button-toggle-group>
 </div>

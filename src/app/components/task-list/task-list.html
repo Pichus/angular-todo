@@ -2,10 +2,10 @@
   <div class="list-toolbar">
     <app-task-filters />
     <div class="actions">
-      @if (selectedIds().size > 0) {
+      @if (hasSelection()) {
         <button mat-stroked-button (click)="deleteSelected()">
           <mat-icon>delete</mat-icon>
-          Delete ({{ selectedIds().size }})
+          Delete ({{ selectionCount() }})
         </button>
       }
       <button mat-flat-button (click)="openCreate()">
@@ -27,7 +27,7 @@
     @for (task of tasks(); track task.id) {
       <app-task-item
         [task]="task"
-        [isSelected]="selectedIds().has(task.id)"
+        [isSelected]="isTaskSelected(task.id)"
         (selectedChange)="onSelectionChange(task.id, $event)"
         (edit)="openEdit($event)"
         (delete)="confirmDelete($event)"

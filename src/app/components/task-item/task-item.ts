@@ -37,4 +37,24 @@ export class TaskItemComponent {
   public onStatusChange(status: TaskStatus): void {
     this.store.dispatch(TasksActions.updateTask({ task: { ...this.task(), status } }));
   }
+
+  public onCheckboxClick(event: MouseEvent): void {
+    event.stopPropagation();
+  }
+
+  public onCheckboxChange(checked: boolean): void {
+    this.selectedChange.emit(checked);
+  }
+
+  public onView(): void {
+    this.view.emit(this.task());
+  }
+
+  public onEdit(): void {
+    this.edit.emit(this.task());
+  }
+
+  public onDelete(): void {
+    this.delete.emit(this.task().id);
+  }
 }
