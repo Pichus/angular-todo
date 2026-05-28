@@ -7,8 +7,8 @@ import { selectAllTasks } from './tasks.selectors';
 
 @Injectable()
 export class TasksEffects {
-  private actions$ = inject(Actions);
-  private store = inject(Store);
+  private readonly actions$ = inject(Actions);
+  private readonly store = inject(Store);
 
   public persistTasks$ = createEffect(
     () =>

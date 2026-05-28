@@ -16,7 +16,7 @@ import { selectFilter } from '../../store/tasks.selectors';
   styleUrl: './task-filters.scss',
 })
 export class TaskFiltersComponent {
-  private store = inject(Store);
+  private readonly store = inject(Store);
 
   public filter = toSignal(this.store.select(selectFilter));
   public statuses: (TaskStatus | 'all')[] = ['all', ...TASK_STATUSES];

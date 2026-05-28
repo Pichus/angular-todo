@@ -16,7 +16,7 @@ import { TasksActions } from '../../store/tasks.actions';
   styleUrl: './task-item.scss',
 })
 export class TaskItemComponent {
-  private store = inject(Store);
+  private readonly store = inject(Store);
 
   public task = input.required<Task>();
   public isSelected = input<boolean>(false);

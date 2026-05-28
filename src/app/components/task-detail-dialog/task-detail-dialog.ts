@@ -15,10 +15,10 @@ import { TaskFormDialogComponent } from '../task-form-dialog/task-form-dialog';
   styleUrl: './task-detail-dialog.scss',
 })
 export class TaskDetailDialogComponent {
-  private store = inject(Store);
-  private dialog = inject(MatDialog);
-  private dialogRef = inject(MatDialogRef<TaskDetailDialogComponent>);
-  private taskId: string = inject(MAT_DIALOG_DATA);
+  private readonly store = inject(Store);
+  private readonly dialog = inject(MatDialog);
+  private readonly dialogRef = inject(MatDialogRef<TaskDetailDialogComponent>);
+  private readonly taskId: string = inject(MAT_DIALOG_DATA);
 
   public task = toSignal(this.store.select(selectTaskById(this.taskId)));
 

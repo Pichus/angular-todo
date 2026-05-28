@@ -34,11 +34,11 @@ function futureDateValidator(control: AbstractControl): ValidationErrors | null 
   styleUrl: './task-form-dialog.scss',
 })
 export class TaskFormDialogComponent {
-  private store = inject(Store);
-  private dialogRef = inject(MatDialogRef<TaskFormDialogComponent>);
-  private fb = inject(FormBuilder);
+  private readonly store = inject(Store);
+  private readonly dialogRef = inject(MatDialogRef<TaskFormDialogComponent>);
+  private readonly fb = inject(FormBuilder);
 
-  public data: Task | null = inject(MAT_DIALOG_DATA, { optional: true });
+  public readonly data: Task | null = inject(MAT_DIALOG_DATA, { optional: true });
   public statuses = TASK_STATUSES;
   public readonly today = new Date();
 

@@ -21,8 +21,8 @@ import { TaskItemComponent } from '../task-item/task-item';
   styleUrl: './task-list.scss',
 })
 export class TaskListComponent {
-  private store = inject(Store);
-  private dialog = inject(MatDialog);
+  private readonly store = inject(Store);
+  private readonly dialog = inject(MatDialog);
 
   public tasks = toSignal(this.store.select(selectFilteredTasks), { initialValue: [] });
   public selectedIds = signal<Set<string>>(new Set());
