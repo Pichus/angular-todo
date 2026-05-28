@@ -24,7 +24,9 @@ export class TaskDetailDialogComponent {
 
   public openEdit(): void {
     const task = this.task();
-    if (!task) return;
+    if (!task) {
+      return;
+    }
     this.dialogRef.close();
     this.dialog.open(TaskFormDialogComponent, { data: task });
   }

@@ -1,24 +1,24 @@
-@if (task(); as t) {
-  <h2 mat-dialog-title>{{ t.title }}</h2>
+@if (task(); as task) {
+  <h2 mat-dialog-title>{{ task.title }}</h2>
 
   <mat-dialog-content>
     <div class="detail-body">
       <div class="meta-row">
         <span class="label">Status</span>
-        <span class="value">{{ t.status }}</span>
+        <span class="value">{{ task.status }}</span>
       </div>
 
-      @if (t.dueDate) {
+      @if (task.dueDate) {
         <div class="meta-row">
           <span class="label">Due Date</span>
-          <span class="value">{{ t.dueDate | date: 'mediumDate' }}</span>
+          <span class="value">{{ task.dueDate | date: 'mediumDate' }}</span>
         </div>
       }
 
-      @if (t.description) {
+      @if (task.description) {
         <div class="description-section">
           <span class="label">Description</span>
-          <p class="description">{{ t.description }}</p>
+          <p class="description">{{ task.description }}</p>
         </div>
       }
     </div>
